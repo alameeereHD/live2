@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>AlameeereTv</title>
 <style>
-/* ========== كامل التنسيقات (CSS) ========== */
+/* ========== جميع التنسيقات السابقة مع تعديلات بسيطة ========== */
 * {
   margin: 0;
   padding: 0;
@@ -512,19 +509,13 @@ video.ff {
   line-height: 1;
 }
 
+/* إخفاء اسم القناة – يظهر فقط في الـ alt */
 .multi-card .ch-name,
 .event-card .ev-name {
-  font-size: 8px;
-  color: #aaa;
-  padding: 2px 2px 0;
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: none; /* تم إخفاء النص */
 }
 
-.event-card .ev-name { padding: 1px 2px; }
+.event-card .ev-name { display: none; }
 .event-card .ev-icon { font-size: 20px; padding: 5px 0 0; }
 
 .multi-card .q-row,
@@ -580,8 +571,6 @@ video.ff {
   border-color: #0f0 !important;
   box-shadow: 0 0 12px rgba(0, 255, 0, .5);
 }
-
-.multi-card.channel-active .ch-name { color: #fff; }
 
 .new-ch {
   border-color: #fff !important;
@@ -744,7 +733,6 @@ video.ff {
 <body>
 <div id="app">
   <div id="err-toast"></div>
-
   <div id="ext-dialog-overlay">
     <div id="ext-dialog">
       <div id="ext-dialog-header">
@@ -767,9 +755,7 @@ video.ff {
             <div class="value" id="ext-device-name">iPhone / iPad</div>
           </div>
         </div>
-        <p class="message" id="ext-dialog-msg">
-          اضغط "فتح المشغل" لتشغيل القناة في التطبيق الخارجي.
-        </p>
+        <p class="message" id="ext-dialog-msg">اضغط "فتح المشغل" لتشغيل القناة في التطبيق الخارجي.</p>
       </div>
       <div id="ext-dialog-footer">
         <button type="button" id="ext-btn-cancel">إلغاء</button>
@@ -831,12 +817,12 @@ video.ff {
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
 <script>
 // ============================================================
-//  DATA – جميع القنوات مع شعارات لكل قناة
+//  البيانات – جميع القنوات مع شعارات صورية (Logos)
 // ============================================================
 var TS_UA = 'Mozilla/5.0 (QtEmbedded; U; Linux; C) IPTV';
 var TS_PROXY = 'https://my-proxy.alameeeretv.workers.dev/';
 
-// تعريف الشعارات
+// روابط شعارات حقيقية
 var LOGO_ALJAZEERA = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Al_Jazeera_Logo.svg/1200px-Al_Jazeera_Logo.svg.png';
 var LOGO_ARABIYA = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Al_Arabiya_Logo.svg/1200px-Al_Arabiya_Logo.svg.png';
 var LOGO_SKY = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Sky_News_Arabia_logo.svg/1200px-Sky_News_Arabia_logo.svg.png';
@@ -845,7 +831,7 @@ var LOGO_BEIN = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/BeIN_
 var LOGO_QURAN = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Quran_Logo.svg/1200px-Quran_Logo.svg.png';
 var LOGO_GENERIC = 'https://img.icons8.com/color/96/000000/tv.png';
 
-// الصفوف الأساسية مع إضافة شعار لكل قناة
+// الصفوف الأساسية – كل قناة تحمل رابط شعارها
 var ROWS = [
   {
     channels: [
@@ -905,7 +891,7 @@ var ROWS = [
   }
 ];
 
-// ======== باقي البيانات (BEIN, ALWAN, THM, EVT) ========
+// ======== باقي البيانات (BEIN, ALWAN, THM, EVT) كما هي ========
 var BASE = 'http://mh.smpy24.live/live/Bengamenbukinafaso2026/msvrpi45e1/';
 var BL = 'https://static.wixstatic.com/media/0f6f17_b14c529157884897b2f02fe167b51bd7~mv2.jpg';
 var AL = 'https://static.wixstatic.com/media/0f6f17_0b9748ca0f2a41698c2d620d753ac140~mv2.jpg';
@@ -998,7 +984,7 @@ var EVT = [
 ];
 
 // ============================================================
-//  APP.JS – منطق التشغيل الكامل مع الإصلاحات النهائية
+//  التطبيق – نفس الكود السابق لكن مع إخفاء النص وإظهار الصور
 // ============================================================
 (function () {
   var hls = null;
@@ -1228,7 +1214,6 @@ var EVT = [
     setTimeout(function () { t.style.display = 'none'; }, 4000);
   }
 
-  // ========== إعادة تحميل التيار الحالي ==========
   function reloadCurrentStream() {
     if (ifw.style.display === 'block' && curPlayUrl) {
       ifp.src = '';
@@ -1355,7 +1340,6 @@ var EVT = [
     hls = null;
   }
 
-  // ======================= START HLS (مع إصلاح الجودة والأخطاء) =======================
   var qBuilt = false;
 
   function startHls(rawUrl) {
@@ -1503,7 +1487,6 @@ var EVT = [
     $all('.multi-card').forEach(function (c) { c.style.borderColor = ''; });
   }
 
-  // ========== أحداث القنوات ==========
   function loadEvent(s) {
     curPlayUrl = s.url;
     curPlayName = 'event1 ' + s.lbl;
@@ -1637,30 +1620,34 @@ var EVT = [
     });
   }
 
-  // ========== buildChannels المعدلة لعرض الشعارات ==========
+  // ===== دالة بناء القنوات الأساسية – تعرض الصور فقط =====
   function buildChannels() {
     ROWS.forEach(function (row, ri) {
       var box = document.getElementById('row-' + ri);
       if (!box) return;
       box.innerHTML = '';
       row.channels.forEach(function (c, ci) {
-        // إذا كانت القناة تحوي شعاراً، اعرضها كبطاقة
         if (c.logo) {
           var card = el('div', 'multi-card');
           var wrap = el('div', 'lw');
           var img = el('img');
           img.src = c.logo;
-          img.alt = c.n;
-          img.onerror = function () { this.style.display = 'none'; };
+          img.alt = c.n;        // الاسم موجود للـ accessibility
+          img.onerror = function () {
+            // إذا فشل تحميل الصورة نعرض أيقونة احتياطية
+            this.style.display = 'none';
+            wrap.textContent = '📺';
+          };
           wrap.appendChild(img);
           card.appendChild(wrap);
-          card.appendChild(el('div', 'ch-name', c.n));
+          // لا نضيف اسم القناة (أو نضيفه لكن مخفياً بـ CSS)
+          // card.appendChild(el('div', 'ch-name', c.n));  // تم إخفاء اسم القناة في CSS
           card.onclick = function () {
             load(ri, ci);
           };
           box.appendChild(card);
         } else {
-          // احتياطي: زر نصي عادي
+          // احتياطي: زر نصي
           var cls = 'ch';
           if (c.t === 'iframe') cls += ' iframe-ch';
           if (c.t === 'ts') cls += ' ts-ch';
@@ -1689,18 +1676,15 @@ var EVT = [
       retryT = null;
     }
     resetSelection();
-
-    // تحديد الزر أو البطاقة النشطة
     var box = document.getElementById('row-' + ri);
     if (box) {
       var children = box.children;
       for (var idx = 0; idx < children.length; idx++) {
         var child = children[idx];
-        // لو كانت بطاقة (multi-card)
         if (child.classList && child.classList.contains('multi-card')) {
-          // نبحث عن اسم القناة داخل البطاقة
-          var nameEl = child.querySelector('.ch-name');
-          if (nameEl && nameEl.textContent === ch.n) {
+          // نبحث عن الصورة أو اسم القناة المخفي
+          var img = child.querySelector('img');
+          if (img && img.alt === ch.n) {
             child.classList.add('channel-active');
             break;
           }
@@ -1709,7 +1693,6 @@ var EVT = [
         }
       }
     }
-
     showTitle(ch.n);
     var t = ch.t || 'hls';
     if (t === 'ts') {
@@ -1733,7 +1716,6 @@ var EVT = [
     startHls(ch.u);
   }
 
-  // ========== قائمة الجودة ==========
   function buildQ() {
     qm.innerHTML = '';
     if (!hls) return;
@@ -1777,7 +1759,6 @@ var EVT = [
     if (qm.classList.contains('open')) updateQActive();
   }
 
-  // ========== أحداث التحكم ==========
   function togglePlay() {
     if (vid.paused) vid.play();
     else vid.pause();
@@ -1839,7 +1820,6 @@ var EVT = [
       || e.target.closest('#loader');
   }
 
-  // ========== تسجيل الأحداث ==========
   document.addEventListener('fullscreenchange', function () {
     setFUI(!!document.fullscreenElement);
   });
@@ -1933,7 +1913,6 @@ var EVT = [
     if (!e.target.closest('#qw')) closeQ();
   });
 
-  // ========== سكرول القنوات ==========
   function bindChannelListScroll() {
     var startX = 0;
     var startY = 0;
@@ -1976,7 +1955,6 @@ var EVT = [
     }, { passive: true });
   }
 
-  // ========== تهيئة ==========
   applyAspect(aIdx);
   applySpeedVis();
 
