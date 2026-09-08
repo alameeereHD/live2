@@ -90,30 +90,69 @@
 
 <script>
     // ============================================================
-    //  قائمة القنوات (تم تحديث روابط "ثمانية" باستخدام البروكسي)
+    //  قائمة القنوات (تم تحديث جميع الروابط باستخدام البروكسي)
     // ============================================================
     const channels = [
-        // قنوات beIN (1 - 7)
-        { name: 'beIN 1', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F918454578001%2Findex.m3u8%3Ft%3DFPttU_ROHL_HeLMGBJ6-Ug%26e%3D1788854234' },
-        { name: 'beIN 2', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F69854211%2Findex.m3u8%3Ft%3DiZJC_VQkE76MZja1Obd1Sg%26e%3D1788855112' },
-        { name: 'beIN 3', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F645587700%2Findex.m3u8%3Ft%3D2oy-DAvS3sX6wBLRn8J1aA%26e%3D1788855255' },
-        { name: 'beIN 4', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F9787488847%2Findex.m3u8%3Ft%3DLQ9QhPvUsySuJgEdBurekA%26e%3D1788855258' },
-        { name: 'beIN 5', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F610303030%2Findex.m3u8%3Ft%3DzWQZtBl39i4dXh1aq7jlBg%26e%3D1788855261' },
-        { name: 'beIN 6', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F1515000000%2Findex.m3u8%3Ft%3DISWnl-rMzbplbLrpx12Ikw%26e%3D1788855263' },
-        { name: 'beIN 7', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F33523510%2Findex.m3u8%3Ft%3Dt_DXjuAGStgcHMM2W9tuww%26e%3D1788855267' },
+        // ===== قنوات beIN الجديدة (1 - 6) مع البروكسي =====
+        { 
+            name: 'beIN 1', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F978480008877005%2Findex.m3u8%3Ft%3DwpKb7nBAefkLr8-efutLlA%26e%3D1788910761&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'beIN 2', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F10011244%2Findex.m3u8%3Ft%3DvcTHrUlh5NHSrc0uRTC3ew%26e%3D1788910809&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'beIN 3', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F161988840%2Findex.m3u8%3Ft%3DRVDzMoElXp9YnFtzANDWzg%26e%3D1788910813&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'beIN 4', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F0103088447%2Findex.m3u8%3Ft%3DHFjwxufifOlQxYYHtngMSQ%26e%3D1788910823&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'beIN 5', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F115451004%2Findex.m3u8%3Ft%3Dtd2ElbjnSGwN_Z5WB7JONQ%26e%3D1788910830&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'beIN 6', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F788550011%2Findex.m3u8%3Ft%3DuwF672MWb3Gl5EKvZjFIwA%26e%3D1788910834&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
 
-        // ===== قنوات "ثمانية" (تم تعديلها لاستخدام البروكسي) =====
+        // ===== قنوات الألوان مع البروكسي =====
         { 
-            name: 'ثمانية 1', 
-            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3455_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+            name: 'الوان ١', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3461_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
         },
         { 
-            name: 'ثمانية 2', 
-            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3454_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+            name: 'الوان ٢', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3460_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
         },
         { 
-            name: 'ثمانية 3', 
-            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3453_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+            name: 'الوان ٣', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3459_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'الوان ٥', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3457_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'الوان ٦', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3456_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+
+        // ===== قنوات "ثمانية" مع البروكسي =====
+        { 
+            name: 'ثمانية ١', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2F103.76.130.164.nip.io%3A8080%2Flive%2F0545580310%2F7337741654%2F746717.m3u8%3Ftoken%3DThdWW0NHBE1UFV4XD1dTQU8aWlpCD0JLHRFZV0BYCRwXUExGUlsWUF5ZRg8UCVcWWxoVF1IZQlwWXQJValAARlxWURANWxBVXRtGXVcXDEFZGgsABlcFAVJVAQ8BBVwEUQZSBFQGB1oABlBRUAVSVAIOGxkVCEVmFlYQTUdRBF1QRxYIBxlHUEJHRg9YEQgPTxpUVE8%2BVVYKXQZaQV0KXkYXDgMbFwhWX14QWkQ7FAoHGgMXBVABD1EBQRUXWwtvUVBZU1lRRwMTBkYZFBQNB0ECGwQEVQQJURFPG0ZAF1VUWGtbUxdfDgUBUwQBSEYXClVcFw1QAQFcBlQNBw1SHBdAR1dFagxdEw1VAwVUV1pWRQ%3D%3D&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'ثمانية ٢', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2F103.76.130.164.nip.io%3A8080%2Flive%2F0545580310%2F7337741654%2F746718.m3u8%3Ftoken%3DThdWW0NHBE1UFV4XD1dTQU8aWlpCD0JLHRFZV0BYCRwXUExGUlsWUF5ZRg8UCVcWWxoVF1IZQlwWXQJValAARlxWURANWxBVXRtGXVcXDEFZGgsABlcFAVJVAQ8BBVwEUQZSBFQGB1oABlBRUAVSVAIOGxkVCEVmFlYQTUdRBF1QRxYIBxlHUEJHRg9YEQgPTxpUVE8%2BVVYKXQZaQV0KXkYXDgMbFwhWX14QWkQ7FAoHGgMXBVABD1EBQRUXWwtvUVBZU1lRRwMTBkYZFBQNB0ECGwQEVQQJURFPG0ZAF1VUWGtbUxdfDgUBUwQBSEYXClVcFw1QAQFcBlQNBw1SHBdAR1dFagxdEw1VAwVUV1pWRQ%3D%3D&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'ثمانية ٣', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2F103.76.130.164.nip.io%3A8080%2Flive%2F0545580310%2F7337741654%2F746719.m3u8%3Ftoken%3DThdWW0NHBE1UFV4XD1dTQU8aWlpCD0JLHRFZV0BYCRwXUExGUlsWUF5ZRg8UCVcWWxoVF1IZQlwWXQJValAARlxWURANWxBVXRtGXVcXDEFZGgsABlcFAVJVAQ8BBVwEUQZSBFQGB1oABlBRUAVSVAIOGxkVCEVmFlYQTUdRBF1QRxYIBxlHUEJHRg9YEQgPTxpUVE8%2BVVYKXQZaQV0KXkYXDgMbFwhWX14QWkQ7FAoHGgMXBVABD1EBQRUXWwtvUVBZU1lRRwMTBkYZFBQNB0ECGwQEVQQJURFPG0ZAF1VUWGtbUxdfDgUBUwQBSEYXClVcFw1QAQFcBlQNBw1SHBdAR1dFagxdEw1VAwVUV1pWRQ%3D%3D&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
         }
     ];
 
