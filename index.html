@@ -38,7 +38,7 @@
         video {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* الوضع الافتراضي */
             background: #000;
         }
 
@@ -57,14 +57,14 @@
         .brand-text {
             font-size: 28px;
             font-weight: 900;
-            color: #00ff66;
-            text-shadow: 0 0 15px #00ff66, 0 0 40px #00ff6644;
+            color: #ffffff;
+            text-shadow: 0 0 15px #ffffff, 0 0 40px #ffffff88, 0 0 80px #ffffff44;
             letter-spacing: 1px;
             background: rgba(0, 0, 0, 0.5);
             padding: 4px 16px;
             border-radius: 12px;
             backdrop-filter: blur(4px);
-            border: 1px solid #00ff6644;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             pointer-events: none;
             white-space: nowrap;
         }
@@ -72,14 +72,14 @@
         .top-bar select {
             pointer-events: auto;
             background: rgba(0, 0, 0, 0.7);
-            border: 1.5px solid #00ff66;
+            border: 1.5px solid #ffffff;
             border-radius: 30px;
             padding: 8px 18px;
-            color: #00ff66;
+            color: #ffffff;
             font-weight: 700;
             font-size: 15px;
             backdrop-filter: blur(8px);
-            box-shadow: 0 0 12px #00ff6644;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
             cursor: pointer;
             outline: none;
             min-width: 110px;
@@ -112,15 +112,15 @@
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 40px;
+            gap: 0px;
             pointer-events: auto;
             z-index: 15;
         }
 
         .btn-circle {
             background: rgba(0,0,0,0.6);
-            border: 2px solid #00ff66;
-            color: #00ff66;
+            border: 2px solid #ffffff;
+            color: #ffffff;
             width: 56px;
             height: 56px;
             border-radius: 50%;
@@ -130,19 +130,19 @@
             justify-content: center;
             cursor: pointer;
             backdrop-filter: blur(8px);
-            box-shadow: 0 0 20px #00ff6644;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             transition: 0.15s;
         }
-        .btn-circle:active { transform: scale(0.92); background: #00ff66; color: #000; }
+        .btn-circle:active { transform: scale(0.92); background: #ffffff; color: #000; }
 
         .btn-circle.play-btn {
             width: 80px;
             height: 80px;
             font-size: 34px;
-            background: #00ff66;
+            background: #ffffff;
             color: #000;
             border: none;
-            box-shadow: 0 0 30px #00ff66, 0 0 60px #00ff6644;
+            box-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.4);
         }
 
         .bottom-bar {
@@ -163,16 +163,16 @@
         .timeline-bg {
             width: 100%;
             height: 4px;
-            background: rgba(255,255,255,0.25);
+            background: rgba(255, 255, 255, 0.25);
             border-radius: 4px;
             position: relative;
         }
         .timeline-progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, #00f3ff, #00ff66);
+            background: linear-gradient(to right, #f0f0f0, #ffffff);
             border-radius: 4px;
-            box-shadow: 0 0 12px #00ff66;
+            box-shadow: 0 0 12px #ffffff;
             position: relative;
         }
         .timeline-progress::after {
@@ -183,9 +183,9 @@
             transform: translateY(-50%);
             width: 14px;
             height: 14px;
-            background: #00ff66;
+            background: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 16px #00ff66;
+            box-shadow: 0 0 16px #ffffff;
         }
 
         .controls-row {
@@ -195,10 +195,10 @@
         }
 
         .time-display {
-            color: #00ff66;
+            color: #ffffff;
             font-weight: 700;
             font-size: 14px;
-            text-shadow: 0 0 10px #00ff66aa;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
             direction: ltr;
         }
 
@@ -212,8 +212,8 @@
 
         .btn-icon {
             background: rgba(0,0,0,0.6);
-            border: 1px solid #00ff66;
-            color: #00ff66;
+            border: 1px solid #ffffff;
+            color: #ffffff;
             width: 42px;
             height: 42px;
             border-radius: 12px;
@@ -223,11 +223,12 @@
             font-size: 16px;
             cursor: pointer;
             backdrop-filter: blur(8px);
-            box-shadow: 0 0 8px #00ff6633;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             transition: 0.15s;
         }
-        .btn-icon:active { background: #00ff66; color: #000; transform: scale(0.92); }
+        .btn-icon:active { background: #ffffff; color: #000; transform: scale(0.92); }
         .btn-speed { font-size: 13px; font-weight: 800; }
+        .btn-aspect { font-size: 14px; font-weight: 800; letter-spacing: 0px; }
 
         .quality-dropdown {
             position: absolute;
@@ -235,13 +236,13 @@
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0,0,0,0.92);
-            border: 1px solid #00ff66;
+            border: 1px solid #ffffff;
             border-radius: 12px;
             padding: 6px 0;
             min-width: 110px;
             display: none;
             flex-direction: column;
-            box-shadow: 0 0 24px #00ff66aa;
+            box-shadow: 0 0 24px rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             z-index: 50;
         }
@@ -259,8 +260,8 @@
         }
         .quality-dropdown button:hover,
         .quality-dropdown button.active {
-            background: #00ff6633;
-            color: #00ff66;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
         }
 
         /* رسالة الحالة */
@@ -274,7 +275,7 @@
             padding: 8px 20px;
             border-radius: 30px;
             font-size: 14px;
-            border: 1px solid #00ff66;
+            border: 1px solid #ffffff;
             backdrop-filter: blur(4px);
             z-index: 20;
             text-align: center;
@@ -294,7 +295,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #00ff66;
+            border-top: 4px solid #ffffff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             z-index: 5;
@@ -336,9 +337,8 @@
         <div></div>
 
         <div class="center-buttons">
-            <button class="btn-circle" id="btnRewind"><i class="fas fa-backward"></i></button>
+            <!-- تم حذف أزرار التقديم والتأخير، بقي زر التشغيل فقط -->
             <button class="btn-circle play-btn" id="btnPlay"><i class="fas fa-pause"></i></button>
-            <button class="btn-circle" id="btnForward"><i class="fas fa-forward"></i></button>
         </div>
 
         <div class="bottom-bar">
@@ -355,6 +355,7 @@
 
                     <button class="btn-icon" id="btnMute"><i class="fas fa-volume-high"></i></button>
                     <button class="btn-icon btn-speed" id="btnSpeed">1x</button>
+                    <button class="btn-icon btn-aspect" id="btnAspect" title="قياس الشاشة">⊡</button>
                     <button class="btn-icon" id="btnQuality"><i class="fas fa-sliders"></i></button>
                     <button class="btn-icon" id="btnPip"><i class="fas fa-images"></i></button>
                     <button class="btn-icon" id="btnLock"><i class="fas fa-lock-open"></i></button>
@@ -397,12 +398,14 @@
     const btnLock = document.getElementById('btnLock');
     const btnQuality = document.getElementById('btnQuality');
     const qualityMenu = document.getElementById('qualityMenu');
-    const btnRewind = document.getElementById('btnRewind');
-    const btnForward = document.getElementById('btnForward');
+    const btnAspect = document.getElementById('btnAspect');
 
     let isLocked = false;
     let dashPlayer = null, hlsPlayer = null, mpegtsPlayer = null;
     let uiTimeout = null;
+    let aspectIndex = 0; // 0: contain, 1: cover, 2: fill
+    const aspectModes = ['contain', 'cover', 'fill'];
+    const aspectIcons = ['⊡', '⊞', '▭'];
 
     // تعبئة محدد القنوات
     channels.forEach((ch, i) => {
@@ -586,6 +589,25 @@
         qualityMenu.style.display = 'none';
     }
 
+    // ===================== دالة تغيير قياس الشاشة =====================
+    function cycleAspect() {
+        aspectIndex = (aspectIndex + 1) % aspectModes.length;
+        video.style.objectFit = aspectModes[aspectIndex];
+        btnAspect.textContent = aspectIcons[aspectIndex];
+        btnAspect.title = 'قياس: ' + aspectModes[aspectIndex];
+        showUI();
+    }
+
+    function setAspectMode(mode) {
+        let idx = aspectModes.indexOf(mode);
+        if (idx !== -1) {
+            aspectIndex = idx;
+            video.style.objectFit = mode;
+            btnAspect.textContent = aspectIcons[idx];
+            btnAspect.title = 'قياس: ' + mode;
+        }
+    }
+
     // ===================== أحداث التحكم =====================
     let currentIndex = 0;
     function loadChannel(index) {
@@ -593,6 +615,8 @@
         loadStream(channels[index].url);
         qualityMenu.style.display = 'none';
         showUI();
+        // إعادة ضبط وضع القياس إلى "ملاءمة" عند تغيير القناة
+        setAspectMode('contain');
     }
 
     channelSelect.addEventListener('change', function() {
@@ -614,6 +638,20 @@
     video.addEventListener('click', () => {
         if (overlay.classList.contains('hidden')) showUI();
         else if (!isLocked) togglePlay();
+    });
+
+    // النقر المزدوج: التبديل بين وضع الملاءمة والتجاوز (اختصار سريع)
+    video.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isLocked) return;
+        // إذا كان الوضع الحالي هو 'contain' أو 'fit'، ننتقل إلى 'cover'، وإلا ننتقل إلى 'contain'
+        if (aspectModes[aspectIndex] === 'contain' || aspectModes[aspectIndex] === 'fit') {
+            setAspectMode('cover');
+        } else {
+            setAspectMode('contain');
+        }
+        showUI();
     });
 
     video.addEventListener('timeupdate', () => {
@@ -646,9 +684,6 @@
         volumeIcon.className = video.muted ? 'fas fa-volume-xmark' : 'fas fa-volume-high';
         showUI();
     });
-
-    btnRewind.addEventListener('click', (e) => { e.stopPropagation(); video.currentTime -= 10; showUI(); });
-    btnForward.addEventListener('click', (e) => { e.stopPropagation(); video.currentTime += 10; showUI(); });
 
     btnSpeed.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -696,6 +731,11 @@
         e.stopPropagation();
         qualityMenu.style.display = qualityMenu.style.display === 'flex' ? 'none' : 'flex';
         showUI();
+    });
+
+    btnAspect.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cycleAspect();
     });
 
     wrapper.addEventListener('mousemove', showUI);
