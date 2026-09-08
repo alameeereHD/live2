@@ -38,7 +38,7 @@
         video {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* الوضع الافتراضي */
+            object-fit: contain;
             background: #000;
         }
 
@@ -264,7 +264,7 @@
             color: #ffffff;
         }
 
-        /* رسالة الحالة */
+        /* رسالة الحالة - تختفي تماماً عند النجاح */
         .status-msg {
             position: absolute;
             bottom: 100px;
@@ -281,9 +281,10 @@
             text-align: center;
             pointer-events: none;
             white-space: nowrap;
+            display: none; /* مخفية افتراضياً */
         }
-        .status-msg.error { border-color: #ff4444; color: #ff4444; }
-        .status-msg.loading { border-color: #ffaa00; color: #ffaa00; }
+        .status-msg.error { border-color: #ff4444; color: #ff4444; display: block; }
+        .status-msg.loading { border-color: #ffaa00; color: #ffaa00; display: block; }
 
         /* Spinner تحميل */
         .spinner {
@@ -329,15 +330,14 @@
     <!-- Spinner -->
     <div class="spinner" id="loadingSpinner"></div>
 
-    <!-- رسالة الحالة -->
-    <div class="status-msg" id="statusMsg">⏳ جارٍ التحميل...</div>
+    <!-- رسالة الحالة (تظهر فقط للتحميل أو الخطأ) -->
+    <div class="status-msg" id="statusMsg"></div>
 
     <!-- طبقة التحكم -->
     <div class="overlay" id="overlay">
         <div></div>
 
         <div class="center-buttons">
-            <!-- تم حذف أزرار التقديم والتأخير، بقي زر التشغيل فقط -->
             <button class="btn-circle play-btn" id="btnPlay"><i class="fas fa-pause"></i></button>
         </div>
 
@@ -367,15 +367,20 @@
 </div>
 
 <script>
-    // ===================== قائمة القنوات (beIN 1 إلى beIN 7) =====================
+    // ===================== قائمة القنوات (beIN 1-7 + ثمانية 1-3) =====================
     const channels = [
+        // القنوات السابقة (beIN 1 إلى 7)
         { name: 'beIN 1', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F918454578001%2Findex.m3u8%3Ft%3DFPttU_ROHL_HeLMGBJ6-Ug%26e%3D1788854234' },
         { name: 'beIN 2', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F69854211%2Findex.m3u8%3Ft%3DiZJC_VQkE76MZja1Obd1Sg%26e%3D1788855112' },
         { name: 'beIN 3', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F645587700%2Findex.m3u8%3Ft%3D2oy-DAvS3sX6wBLRn8J1aA%26e%3D1788855255' },
         { name: 'beIN 4', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F9787488847%2Findex.m3u8%3Ft%3DLQ9QhPvUsySuJgEdBurekA%26e%3D1788855258' },
         { name: 'beIN 5', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F610303030%2Findex.m3u8%3Ft%3DzWQZtBl39i4dXh1aq7jlBg%26e%3D1788855261' },
         { name: 'beIN 6', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F1515000000%2Findex.m3u8%3Ft%3DISWnl-rMzbplbLrpx12Ikw%26e%3D1788855263' },
-        { name: 'beIN 7', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F33523510%2Findex.m3u8%3Ft%3Dt_DXjuAGStgcHMM2W9tuww%26e%3D1788855267' }
+        { name: 'beIN 7', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F33523510%2Findex.m3u8%3Ft%3Dt_DXjuAGStgcHMM2W9tuww%26e%3D1788855267' },
+        // القنوات الجديدة (ثمانية 1، 2، 3)
+        { name: 'ثمانية 1', url: 'https://blcco.linkip.org/live/3455_.m3u8' },
+        { name: 'ثمانية 2', url: 'https://blcco.linkip.org/live/3454_.m3u8' },
+        { name: 'ثمانية 3', url: 'https://blcco.linkip.org/live/3453_.m3u8' }
     ];
 
     // ===================== متغيرات =====================
@@ -417,6 +422,14 @@
 
     // ===================== دوال مساعدة =====================
     function setStatus(text, type = 'loading') {
+        // إذا كان النص فارغاً، نخفي الرسالة تماماً
+        if (!text) {
+            statusMsg.style.display = 'none';
+            spinner.style.display = 'none';
+            return;
+        }
+        // وإلا نعرضها بالنوع المناسب
+        statusMsg.style.display = 'block';
         statusMsg.textContent = text;
         statusMsg.className = 'status-msg ' + type;
         if (type === 'loading') spinner.style.display = 'block';
@@ -448,6 +461,8 @@
         video.playbackRate = 1.0;
         btnSpeed.textContent = '1x';
         qualityMenu.style.display = 'none';
+        // إخفاء أي رسالة حالة عند التدمير
+        setStatus('');
     }
 
     // ===================== المحرك الذكي =====================
@@ -477,7 +492,7 @@
             dashPlayer.initialize(video, cleanUrl, true);
             if (protectionData) dashPlayer.setProtectionData(protectionData);
             dashPlayer.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => {
-                setStatus('✅ جاهز', '');
+                setStatus(''); // إخفاء الرسالة تماماً
                 video.play().catch(() => {});
                 setTimeout(setupDashQualities, 1500);
             });
@@ -489,7 +504,7 @@
                 hlsPlayer.loadSource(cleanUrl);
                 hlsPlayer.attachMedia(video);
                 hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => {
-                    setStatus('✅ جاهز', '');
+                    setStatus(''); // إخفاء الرسالة تماماً
                     video.play().catch(() => {});
                     setupHlsQualities();
                 });
@@ -497,7 +512,7 @@
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = cleanUrl;
                 video.addEventListener('loadedmetadata', () => {
-                    setStatus('✅ جاهز', '');
+                    setStatus(''); // إخفاء الرسالة تماماً
                     video.play().catch(() => {});
                 });
             } else {
@@ -510,7 +525,7 @@
                 mpegtsPlayer = mpegts.createPlayer({ type, isLive: true, url: cleanUrl });
                 mpegtsPlayer.attachMediaElement(video);
                 mpegtsPlayer.load();
-                mpegtsPlayer.play().then(() => setStatus('✅ جاهز', '')).catch(() => setStatus('⚠️ تشغيل تلقائي مقيد', ''));
+                mpegtsPlayer.play().then(() => setStatus('')).catch(() => setStatus('⚠️ تشغيل تلقائي مقيد', ''));
                 qualityMenu.innerHTML = '<button class="active">تلقائي</button>';
             } else {
                 fallback(cleanUrl);
@@ -525,7 +540,7 @@
         video.src = url;
         video.load();
         video.addEventListener('loadedmetadata', () => {
-            setStatus('✅ جاهز', '');
+            setStatus(''); // إخفاء الرسالة تماماً
             video.play().catch(() => {});
             qualityMenu.innerHTML = '<button class="active">تلقائي</button>';
         });
@@ -645,7 +660,6 @@
         e.preventDefault();
         e.stopPropagation();
         if (isLocked) return;
-        // إذا كان الوضع الحالي هو 'contain' أو 'fit'، ننتقل إلى 'cover'، وإلا ننتقل إلى 'contain'
         if (aspectModes[aspectIndex] === 'contain' || aspectModes[aspectIndex] === 'fit') {
             setAspectMode('cover');
         } else {
