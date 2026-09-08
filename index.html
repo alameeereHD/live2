@@ -90,7 +90,7 @@
 
 <script>
     // ============================================================
-    //  قائمة القنوات (تم إضافة قنوات "ثمانية" مع تفعيل محاولة CORS)
+    //  قائمة القنوات (تم تحديث روابط "ثمانية" باستخدام البروكسي)
     // ============================================================
     const channels = [
         // قنوات beIN (1 - 7)
@@ -102,10 +102,19 @@
         { name: 'beIN 6', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F1515000000%2Findex.m3u8%3Ft%3DISWnl-rMzbplbLrpx12Ikw%26e%3D1788855263' },
         { name: 'beIN 7', url: 'https://alyaassta.hsinnzaer5.workers.dev/?stream=http%3A%2F%2Fre.new-redirect.online%2Flive%2F33523510%2Findex.m3u8%3Ft%3Dt_DXjuAGStgcHMM2W9tuww%26e%3D1788855267' },
 
-        // قنوات "ثمانية" (تم إعادة تفعيلها مع إعدادات CORS المحسّنة)
-        { name: 'ثمانية 1', url: 'https://blcco.linkip.org/live/3455_.m3u8' },
-        { name: 'ثمانية 2', url: 'https://blcco.linkip.org/live/3454_.m3u8' },
-        { name: 'ثمانية 3', url: 'https://blcco.linkip.org/live/3453_.m3u8' }
+        // ===== قنوات "ثمانية" (تم تعديلها لاستخدام البروكسي) =====
+        { 
+            name: 'ثمانية 1', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3455_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'ثمانية 2', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3454_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+        { 
+            name: 'ثمانية 3', 
+            url: 'https://my-proxy.alameeeretv.workers.dev/?url=https%3A%2F%2Fblcco.linkip.org%2Flive%2F3453_.m3u8&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        }
     ];
 
     // ===================== متغيرات =====================
@@ -136,7 +145,6 @@
     let aspectIndex = 0;
     const aspectModes = ['contain', 'cover', 'fill'];
     const aspectIcons = ['⊡', '⊞', '▭'];
-    let currentChannelUrl = '';
 
     // تعبئة المحدد
     channels.forEach((ch, i) => {
@@ -178,17 +186,16 @@
         setStatus('');
     }
 
-    // ===================== المحرك الذكي (مع دعم CORS) =====================
+    // ===================== المحرك الذكي =====================
     function loadStream(url) {
         destroyPlayers();
-        currentChannelUrl = url;
         setStatus('⏳ جارٍ التحميل...', 'loading');
         showUI();
 
         let cleanUrl = url.split('|')[0];
         const low = cleanUrl.toLowerCase();
 
-        // ==== 1. DASH (.mpd) ====
+        // DASH
         if (low.includes('.mpd')) {
             dashPlayer = dashjs.MediaPlayer().create();
             dashPlayer.initialize(video, cleanUrl, true);
@@ -201,9 +208,9 @@
             return;
         }
 
-        // ==== 2. HLS (.m3u8) - محاولة التشغيل الأصلي أولاً (للتغلب على CORS في Safari) ====
+        // HLS
         if (low.includes('.m3u8')) {
-            // 2.1 هل المتصفح يدعم HLS أصلاً؟ (Safari / iOS)
+            // تشغيل أصلي (Safari)
             if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = cleanUrl;
                 video.addEventListener('loadedmetadata', function onMeta() {
@@ -212,21 +219,18 @@
                     qualityMenu.innerHTML = '<button class="active">تلقائي</button>';
                     video.removeEventListener('loadedmetadata', onMeta);
                 });
-                video.addEventListener('error', () => setStatus('❌ فشل التشغيل الأصلي (قد يكون CORS)', 'error'));
+                video.addEventListener('error', () => setStatus('❌ فشل التشغيل الأصلي', 'error'));
                 return;
             }
 
-            // 2.2 استخدام hls.js مع إعدادات CORS محسّنة
+            // HLS.js
             if (Hls.isSupported()) {
                 hlsPlayer = new Hls({
                     enableWorker: true,
                     lowLatencyMode: true,
                     xhrSetup: function(xhr, xhrUrl) {
-                        // محاولة محاكاة طلب المتصفح لتجاوز بعض قيود CORS
                         xhr.withCredentials = true;
-                        try {
-                            xhr.setRequestHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-                        } catch(e) {}
+                        try { xhr.setRequestHeader('User-Agent', 'Mozilla/5.0 (QtEmbedded; U; Linux; C) IPTV'); } catch(e) {}
                     }
                 });
                 hlsPlayer.loadSource(cleanUrl);
@@ -238,8 +242,7 @@
                 });
                 hlsPlayer.on(Hls.Events.ERROR, (event, data) => {
                     if (data.fatal) {
-                        // إذا فشل hls.js، حاول التشغيل المباشر كحل أخير (بعض الخوادم تسمح بذلك)
-                        setStatus('⚠️ فشل HLS.js، محاولة التشغيل المباشر...', 'loading');
+                        setStatus('⚠️ فشل HLS.js، محاولة مباشر...', 'loading');
                         video.src = cleanUrl;
                         video.load();
                         video.play().catch(() => setStatus('❌ فشل التشغيل (CORS أو رابط منتهي)', 'error'));
@@ -249,7 +252,7 @@
             }
         }
 
-        // ==== 3. MPEG-TS / FLV ====
+        // MPEG-TS / FLV
         if (low.includes('.ts') || low.includes('.flv') || (typeof mpegts !== 'undefined' && mpegts.JSPlayer && mpegts.JSPlayer.isSupported())) {
             if (typeof mpegts !== 'undefined' && mpegts.JSPlayer && mpegts.JSPlayer.isSupported()) {
                 let type = low.includes('.flv') ? 'flv' : 'mse';
@@ -257,7 +260,7 @@
                     type: type,
                     isLive: true,
                     url: cleanUrl,
-                    withCredentials: true // تفعيل المصادقة لتجاوز CORS
+                    withCredentials: true
                 });
                 mpegtsPlayer.attachMediaElement(video);
                 mpegtsPlayer.load();
@@ -267,7 +270,7 @@
             }
         }
 
-        // ==== 4. باقي الصيغ (MP4, إلخ) ====
+        // باقي الصيغ
         video.src = cleanUrl;
         video.load();
         video.addEventListener('loadedmetadata', () => {
