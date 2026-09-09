@@ -90,10 +90,10 @@
 
 <script>
     // ============================================================
-    //  قائمة القنوات (تم تحديث جميع الروابط باستخدام البروكسي)
+    //  قائمة القنوات (جميع القنوات مع الروابط)
     // ============================================================
     const channels = [
-        // ===== قنوات beIN الجديدة (1 - 6) مع البروكسي =====
+        // ===== قنوات beIN (1 - 6) مع البروكسي =====
         { 
             name: 'beIN 1', 
             url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2Fre.new-redirect.online%2Flive%2F978480008877005%2Findex.m3u8%3Ft%3DwpKb7nBAefkLr8-efutLlA%26e%3D1788910761&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
@@ -153,6 +153,12 @@
         { 
             name: 'ثمانية ٣', 
             url: 'https://my-proxy.alameeeretv.workers.dev/?url=http%3A%2F%2F103.76.130.164.nip.io%3A8080%2Flive%2F0545580310%2F7337741654%2F746719.m3u8%3Ftoken%3DThdWW0NHBE1UFV4XD1dTQU8aWlpCD0JLHRFZV0BYCRwXUExGUlsWUF5ZRg8UCVcWWxoVF1IZQlwWXQJValAARlxWURANWxBVXRtGXVcXDEFZGgsABlcFAVJVAQ8BBVwEUQZSBFQGB1oABlBRUAVSVAIOGxkVCEVmFlYQTUdRBF1QRxYIBxlHUEJHRg9YEQgPTxpUVE8%2BVVYKXQZaQV0KXkYXDgMbFwhWX14QWkQ7FAoHGgMXBVABD1EBQRUXWwtvUVBZU1lRRwMTBkYZFBQNB0ECGwQEVQQJURFPG0ZAF1VUWGtbUxdfDgUBUwQBSEYXClVcFw1QAQFcBlQNBw1SHBdAR1dFagxdEw1VAwVUV1pWRQ%3D%3D&ua=Mozilla%2F5.0%20(QtEmbedded%3B%20U%3B%20Linux%3B%20C)%20IPTV' 
+        },
+
+        // ===== القناة الجديدة (TS) سيتم تشغيلها عبر mpegts.js =====
+        { 
+            name: 'قناة TS', 
+            url: 'http://185.191.126.127:8080/live//////////////cpah7wynjxt7a/izsukesrogu3g/325805.ts' 
         }
     ];
 
@@ -291,20 +297,30 @@
             }
         }
 
-        // MPEG-TS / FLV
+        // MPEG-TS / FLV (للقناة الجديدة)
         if (low.includes('.ts') || low.includes('.flv') || (typeof mpegts !== 'undefined' && mpegts.JSPlayer && mpegts.JSPlayer.isSupported())) {
             if (typeof mpegts !== 'undefined' && mpegts.JSPlayer && mpegts.JSPlayer.isSupported()) {
                 let type = low.includes('.flv') ? 'flv' : 'mse';
-                mpegtsPlayer = mpegts.createPlayer({
-                    type: type,
-                    isLive: true,
-                    url: cleanUrl,
-                    withCredentials: true
-                });
-                mpegtsPlayer.attachMediaElement(video);
-                mpegtsPlayer.load();
-                mpegtsPlayer.play().then(() => setStatus('')).catch(() => setStatus('⚠️ فشل MPEGTS', 'error'));
-                qualityMenu.innerHTML = '<button class="active">تلقائي</button>';
+                try {
+                    mpegtsPlayer = mpegts.createPlayer({
+                        type: type,
+                        isLive: true,
+                        url: cleanUrl,
+                        withCredentials: true
+                    });
+                    mpegtsPlayer.attachMediaElement(video);
+                    mpegtsPlayer.load();
+                    mpegtsPlayer.play().then(() => {
+                        setStatus('');
+                    }).catch((err) => {
+                        console.error('MPEGTS play error:', err);
+                        setStatus('⚠️ فشل تشغيل MPEGTS', 'error');
+                    });
+                    qualityMenu.innerHTML = '<button class="active">تلقائي</button>';
+                } catch(e) {
+                    console.error('MPEGTS create error:', e);
+                    setStatus('❌ خطأ في MPEGTS', 'error');
+                }
                 return;
             }
         }
